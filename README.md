@@ -1,3 +1,5 @@
+**!!! Note from Dmitry Churkin: This is a fork of https://github.com/biscolab/laravel-recaptcha as maintainer Roberto Belotti abandoned the package!!!**
+
 **Laravel ReCAPTCHA** is a very simply-to-use Laravel 5 package to embed Google reCAPTCHA in your application.
 
 [![Build Status](https://travis-ci.org/biscolab/laravel-recaptcha.svg?branch=master#img-thumbnail)](https://travis-ci.org/biscolab/laravel-recaptcha)
@@ -29,16 +31,16 @@ Follow the instructions and at the end of the process you will find **Site key**
 
 ## System requirements
 
-| Package version | reCaptcha version             | PHP version           | Laravel version         | 
-| --------------- | ----------------------------- | --------------------- | ----------------------- | 
-| 6.1             | v3, v2 Invisible, v2 Checkbox | 7.3 or greater        | 7, 8, 9, 10, 11         | 
-| 6.0             | v3, v2 Invisible, v2 Checkbox | 7.3 or greater        | 7, 8, 9, 10             | 
-| 5.x             | v3, v2 Invisible, v2 Checkbox | 7.3 or greater        | 7, 8, 9                 | 
-| 4.2.x to 4.4.x  | v3, v2 Invisible, v2 Checkbox | 7.1 or greater        | 5.5 or greater, 6, 7, 8 | 
-| 4.1.x           | v3, v2 Invisible, v2 Checkbox | 7.1 or greater        | 5.5 or greater, 6, 7    | 
-| 4.0.x           | v3, v2 Invisible, v2 Checkbox | 7.1 or greater        | 5.5 or greater, 6       | 
-| 3.x             | v3, v2 Invisible, v2 Checkbox | 7.1 or greater        | 5.5 or greater, 6 (\*)  | 
-| 2.x             | v2 Invisible, v2 Checkbox     | 5.5.9, 7.0 or greater | 5.0 or greater          | 
+| Package version | reCaptcha version             | PHP version           | Laravel version         |
+| --------------- | ----------------------------- | --------------------- | ----------------------- |
+| 6.1             | v3, v2 Invisible, v2 Checkbox | 7.3 or greater        | 7, 8, 9, 10, 11         |
+| 6.0             | v3, v2 Invisible, v2 Checkbox | 7.3 or greater        | 7, 8, 9, 10             |
+| 5.x             | v3, v2 Invisible, v2 Checkbox | 7.3 or greater        | 7, 8, 9                 |
+| 4.2.x to 4.4.x  | v3, v2 Invisible, v2 Checkbox | 7.1 or greater        | 5.5 or greater, 6, 7, 8 |
+| 4.1.x           | v3, v2 Invisible, v2 Checkbox | 7.1 or greater        | 5.5 or greater, 6, 7    |
+| 4.0.x           | v3, v2 Invisible, v2 Checkbox | 7.1 or greater        | 5.5 or greater, 6       |
+| 3.x             | v3, v2 Invisible, v2 Checkbox | 7.1 or greater        | 5.5 or greater, 6 (\*)  |
+| 2.x             | v2 Invisible, v2 Checkbox     | 5.5.9, 7.0 or greater | 5.0 or greater          |
 
 > (\*) Version 3.6.1 is Laravel 6 ready
 
@@ -47,7 +49,7 @@ Follow the instructions and at the end of the process you will find **Site key**
 You can install the package via composer:
 
 ```sh
-$ composer require biscolab/laravel-recaptcha
+$ composer require dmitrychurkin/laravel-recaptcha
 ```
 
 Laravel 5.5 (or greater) uses package auto-discovery, so doesn't require you to manually add the Service Provider, but if you don't use auto-discovery `ReCaptchaServiceProvider` must be registered in `config/app.php`:
@@ -367,14 +369,14 @@ Insert `htmlScriptTagJsApi($config)` helper before closing `</head>` tag.
         ]) !!}
 
         <!-- OR! -->
-        
+
         {!! htmlScriptTagJsApi([
             'action' => 'homepage',
             'custom_validation' => 'myCustomValidation'
         ]) !!}
     </head>
 ```
-`$config` is required and is an associative array containing configuration parameters required for the JavaScript validation handling. 
+`$config` is required and is an associative array containing configuration parameters required for the JavaScript validation handling.
 
 The keys are:
 
@@ -394,15 +396,15 @@ Same will happen with `callback_catch`. `callback_catch` will be called in event
 
 Please, go to <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch" target="_blank">Using Fetch</a> for further information on `fetch` javascript function.
 
-> **Warning!!! Check browser compatibility** 
+> **Warning!!! Check browser compatibility**
 `fetch` function has compatibility issues with some browser like IE. Please create a custom validation function and set `custom_validation` with its name. That function has to accept as argument the `token`received from Google reCAPTCHA API.
 >
-> <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#Browser_compatibility" target="_blank">Fetch browser compatibility</a> 
+> <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#Browser_compatibility" target="_blank">Fetch browser compatibility</a>
 
 
 ### Validation Laravel route
 
-Default validation route is `config('recaptcha.default_validation_route', 'biscolab-recaptcha/validate')`.  
+Default validation route is `config('recaptcha.default_validation_route', 'biscolab-recaptcha/validate')`.
 Route and relative Controller are built-in in the package. The route if filtered and protected by Laravel `web` Middleware, that's why is important you embed `csrf-token` HTML meta tag and send `X-Requested-Wit` and `X-CSRF-TOKEN` headers.
 
 You can also change the validation end-point changing `default_validation_route` value in `recaptcha.php` config file.
@@ -473,7 +475,7 @@ The result should be something like that:
         function callbackThen(response){
         	// read HTTP status
             console.log(response.status);
-            
+
             // read Promise object
             response.json().then(function(data){
                 console.log(data);
@@ -481,16 +483,16 @@ The result should be something like that:
         }
         function callbackCatch(error){
             console.error('Error:', error)
-        }   
-    </script>    
+        }
+    </script>
     ...
     {!! htmlScriptTagJsApiV3([
         'action' => 'homepage',
         'callback_then' => 'callbackThen',
         'callback_catch' => 'callbackCatch'
-    ]) !!}    
+    ]) !!}
 </head>
-``` 
+```
 
 ### "custom_validation" function
 
@@ -501,18 +503,18 @@ The result should be something like that:
 ```html
 <head>
     ...
-    <!-- IMPORTANT!!! remember CSRF token --> 
+    <!-- IMPORTANT!!! remember CSRF token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     ...
     <script type="text/javascript">
         function myCustomValidation(token) {
-            // do something with token 
+            // do something with token
         }
-    </script>    
+    </script>
     ...
     {!! htmlScriptTagJsApiV3([
         'action' => 'homepage',
         'custom_validation' => 'myCustomValidation'
-    ]) !!}    
+    ]) !!}
 </head>
-``` 
+```
