@@ -1,5 +1,5 @@
 {
-    "name": "dmitrychurkin/laravel-recaptcha",
+    "name": "ncaroyannis/laravel-recaptcha",
     "description": "Simple and painless Google reCAPTCHA package for Laravel framework",
     "license": "MIT",
     "type": "library",
